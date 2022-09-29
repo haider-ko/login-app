@@ -13,6 +13,7 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import FormItem from "antd/es/form/FormItem";
+import "../components/Sign-up.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 const { Option } = Select;
@@ -127,8 +128,9 @@ const Signup = () => {
         style={{
           alignContent: "center",
           justifyContent: "center",
-          marginLeft: "500px",
+          marginLeft: "588px",
           paddingBottom: "30px",
+          padding: "10px",
         }}
       >
         Sign Up Form
@@ -138,10 +140,7 @@ const Signup = () => {
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ["zhejiang", "hangzhou", "xihu"],
-          prefix: "86",
-        }}
+        style={{ width: "110pc" }}
         scrollToFirstError
       >
         <Form.Item
@@ -161,7 +160,7 @@ const Signup = () => {
             },
           ]}
         >
-          <Input />
+          <Input className="inputfield" />
         </Form.Item>
 
         <Form.Item
@@ -178,7 +177,7 @@ const Signup = () => {
             },
           ]}
         >
-          <Input />
+          <Input className="inputfield" />
         </Form.Item>
 
         <Form.Item
@@ -199,7 +198,7 @@ const Signup = () => {
             },
           ]}
         >
-          <Input />
+          <Input className="inputfield" />
         </Form.Item>
 
         <Form.Item
@@ -217,7 +216,7 @@ const Signup = () => {
           ]}
           hasFeedback
         >
-          <Input.Password placeholder="Password" />
+          <Input.Password className="inputfield" placeholder="Password" />
         </Form.Item>
 
         <Form.Item
@@ -243,7 +242,7 @@ const Signup = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password className="inputfield" />
         </Form.Item>
 
         <Form.Item
@@ -256,29 +255,7 @@ const Signup = () => {
             },
           ]}
         >
-          <Input
-            addonBefore={prefixSelector}
-            style={{
-              width: "100%",
-            }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="gender"
-          label="Gender"
-          rules={[
-            {
-              required: true,
-              message: "Please select gender!",
-            },
-          ]}
-        >
-          <Select placeholder="select your gender">
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-            <Option value="other">Other</Option>
-          </Select>
+          <Input className="inputfield" addonBefore={prefixSelector} />
         </Form.Item>
 
         <Form.Item

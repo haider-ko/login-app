@@ -6,6 +6,7 @@ import { Col, Row } from "antd";
 import "../LoginPage/Login.css";
 import { useState } from "react";
 import { Space, message } from "antd";
+import { Link } from "react-router-dom";
 const { Title } = Typography;
 
 const LoginForm = () => {
@@ -18,8 +19,10 @@ const LoginForm = () => {
   const [loginpassword, setloginpassword] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialState, SetinitialState] = useState([]);
+  const [form] = Form.useForm();
 
-  const signinfunction = () => {
+  async function signinfunction() {
+    await form.validateFields();
     console.log("come");
     const allUsersData = JSON.parse(localStorage.getItem("userData")) || [];
 
@@ -28,16 +31,17 @@ const LoginForm = () => {
     // when email is found
     if (filterUser.length) {
       if (filterUser[0].password === loginpassword) {
-        window.alert("Login success");
+        message
+          .loading("Action in progress..", 1)
+          .then(() => message.success("Login success", 2.5));
       } else {
-        window.alert("Login failed. Wrong password");
+        message.error("Login failed. Wrong password");
       }
     } else {
       // when email is not found
-      window.alert("no user found");
-      console.log("login failed");
+      message.warning("No user found");
     }
-  };
+  }
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -52,12 +56,12 @@ const LoginForm = () => {
         padding="200px"
         className="body"
         style={{
-          backgroundColor: "#41463D",
+          backgroundColor: "rgb(108 11 15)",
           justifyContent: "center",
           height: "100vh",
         }}
       >
-        <Col span={15} style={{ backgroundColor: "#191414" }}>
+        <Col span={15}>
           <Space
             direction="vertical"
             size="middle"
@@ -70,7 +74,14 @@ const LoginForm = () => {
           >
             <Card
               size="small"
-              style={{ marginTop: "100px", backgroundColor: "#ffffff" }}
+              className="ant-card ant-card-bordered ant-card-small"
+              style={{
+                marginTop: "80px",
+                backgroundColor: "#ffffff",
+                marginLeft: "200px",
+                width: "400px",
+                borderRadius: "20px",
+              }}
             >
               <Row style={{ padding: "30px" }} gutter={[10, 100]}>
                 <Col span={14} offset={4}>
@@ -141,10 +152,6 @@ const LoginForm = () => {
                       >
                         <Checkbox>Remember me</Checkbox>
                       </Form.Item>
-
-                      <a className="login-form-forgot" href="">
-                        Forgot password
-                      </a>
                     </Form.Item>
 
                     <Form.Item>
@@ -154,10 +161,11 @@ const LoginForm = () => {
                         className="login-form-button"
                         shape="round"
                         onClick={signinfunction}
+                        style={{ marginRight: "5px" }}
                       >
                         Log in
                       </Button>
-                      Or <a href="">register now!</a>
+                      Or <Link to="/signup">register now!</Link>
                     </Form.Item>
                   </Form>
                 </Col>

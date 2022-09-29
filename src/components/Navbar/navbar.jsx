@@ -4,31 +4,58 @@ import { Typography } from "antd";
 import { Outlet } from "react-router";
 import { Avatar, Image } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+import { Link } from "react-router-dom";
 import React from "react";
 import Signup from "../Sign-up";
 import LoginForm from "../LoginPage/Login-Page";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
+
+const menu = (
+  <Menu
+    items={[
+      {
+        label: <Link to="/login">Sign In</Link>,
+        key: "0",
+      },
+      {
+        label: <Link to="/signup">Sign Up</Link>,
+        key: "1",
+      },
+    ]}
+  />
+);
+
 const Navbar = (props) => {
   return (
     <>
       <Layout className="layout">
-        <Header style={{ height: "48px", lineHeight: "0" }}>
+        <Header
+          style={{
+            height: "48px",
+            lineHeight: "0",
+            backgroundColor: "#0F0E0E",
+          }}
+        >
           <Row
             align="middle"
             gutter={20}
             justify="end"
-            style={{ height: "48px", backgroundColor: "#0B132B" }}
+            style={{ height: "48px", backgroundColor: "#0F0E0E" }}
           >
             <Col>
-              <Avatar icon={<UserOutlined />} />
+              <Dropdown overlay={menu}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <Avatar icon={<UserOutlined />} />
+                  </Space>
+                </a>
+              </Dropdown>
             </Col>
-            <Col>
-              <Typography.Title level={3} style={{ color: "white", margin: 0 }}>
-                {props.name}
-              </Typography.Title>
-            </Col>
+            <Col></Col>
           </Row>
         </Header>
 

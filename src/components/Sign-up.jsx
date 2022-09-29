@@ -88,7 +88,7 @@ const Signup = () => {
     localStorage.setItem("userData", JSON.stringify(userData));
     // console.log(userData[1].password) test create new branch;
 
-    navigate("/login");
+    navigate("/");
   }
 
   const prefixSelector = (

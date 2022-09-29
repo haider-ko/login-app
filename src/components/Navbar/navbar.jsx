@@ -18,7 +18,7 @@ const menu = (
   <Menu
     items={[
       {
-        label: <Link to="/login">Sign In</Link>,
+        label: <Link to="/">Sign In</Link>,
         key: "0",
       },
       {

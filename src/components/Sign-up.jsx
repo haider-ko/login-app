@@ -133,7 +133,7 @@ const Signup = () => {
           padding: "10px",
         }}
       >
-        Sign Up Form
+        Sign Up
       </Title>
       <Form
         {...formItemLayout}

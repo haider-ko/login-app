@@ -5,6 +5,8 @@ import React from "react";
 import { Col, Row } from "antd";
 import "../LoginPage/Login.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Space, message } from "antd";
 import { Link } from "react-router-dom";
 const { Title } = Typography;
@@ -20,7 +22,7 @@ const LoginForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialState, SetinitialState] = useState([]);
   const [form] = Form.useForm();
-
+  var navigate = useNavigate();
   async function signinfunction() {
     await form.validateFields();
     console.log("come");
@@ -34,6 +36,8 @@ const LoginForm = () => {
         message
           .loading("Action in progress..", 1)
           .then(() => message.success("Login success", 2.5));
+
+        navigate("/home");
       } else {
         message.error("Login failed. Wrong password");
       }

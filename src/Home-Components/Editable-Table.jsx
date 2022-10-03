@@ -1,10 +1,26 @@
-import { Button, Form, Input, Popconfirm, Table, Card, Spin } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Popconfirm,
+  Table,
+  Card,
+  Spin,
+  Space,
+} from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const StyledCard = styled(Card)`
   border-radius: 10px;
+`;
+
+const StyledSpace = styled(Space)`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const EditableContext = React.createContext(null);
@@ -74,7 +90,6 @@ const EditableCell = ({
       </Form.Item>
     ) : (
       <div
-        className="editable-cell-value-wrap"
         style={{
           paddingRight: 24,
         }}
@@ -91,9 +106,9 @@ const EditableCell = ({
 const EditTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [count, setCount] = useState(11);
 
   //Api Fetching
-
   useEffect(() => {
     if (isFetching) {
       fetch("https://jsonplaceholder.typicode.com/users")
@@ -102,76 +117,10 @@ const EditTable = () => {
     }
   }, [isFetching]);
 
-  const [count, setCount] = useState(2);
-  console.log(dataSource);
-
   const handleDelete = (id) => {
     const newData = dataSource.filter((item) => item.id !== id);
     setDataSource(newData);
   };
-
-  const defaultColumns = [
-    {
-      title: "name",
-      dataIndex: "name",
-      width: "30%",
-      editable: true,
-    },
-    {
-      title: "email",
-      dataIndex: "email",
-      editable: true,
-    },
-    {
-      title: "username",
-      dataIndex: "username",
-      editable: true,
-    },
-    {
-      title: "phone number",
-      dataIndex: "phone",
-      editable: true,
-    },
-
-    {
-      title: "operation",
-      dataIndex: "operation",
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <DeleteTwoTone />
-          </Popconfirm>
-        ) : null,
-    },
-    // {
-    //   title: "operation",
-    //   dataIndex: "operation",
-    //   render: (_, record) =>
-    //     dataSource.length >= 1 ? (
-    //       <>
-    //         <Link type="primary" onClick={() => showModal(record.id)}>
-    //           Open Modal
-    //         </Link>
-    //         <Modal
-    //           title="Basic Modal"
-    //           open={isModalOpen}
-    //           onOk={handleOk}
-    //           onCancel={handleCancel}
-    //         >
-    //           <div>
-    //             {dataSource.map((employee, index) => {
-    //               return <div>{employee.name}</div>;
-    //             })}
-    //           </div>
-    //         </Modal>
-    //       </>
-    //     ) : null,
-    // },
-  ];
-
   const handleAdd = () => {
     const newData = {
       id: count,
@@ -179,6 +128,7 @@ const EditTable = () => {
       email: "Type your email ",
       phone: `Type your phone number`,
       username: `Type your username`,
+      website: `Type your website`,
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
@@ -198,6 +148,56 @@ const EditTable = () => {
       cell: EditableCell,
     },
   };
+
+  const defaultColumns = [
+    {
+      title: "No",
+      dataIndex: "id",
+      editable: true,
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      editable: true,
+    },
+    {
+      title: "E-mail",
+      dataIndex: "email",
+      editable: true,
+    },
+    {
+      title: "User Name",
+      dataIndex: "username",
+      editable: true,
+    },
+    {
+      title: "Phone number",
+      dataIndex: "phone",
+      width: 300,
+      editable: true,
+    },
+    {
+      title: "Web Site",
+      dataIndex: "website",
+      editable: true,
+    },
+
+    {
+      title: " ",
+      dataIndex: "operation",
+      align: "center",
+      width: 30,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <DeleteTwoTone />
+          </Popconfirm>
+        ) : null,
+    },
+  ];
   const columns = defaultColumns.map((col) => {
     if (!col.editable) {
       return col;
@@ -215,37 +215,39 @@ const EditTable = () => {
     };
   });
   return (
-    <div>
-      <Button
-        onClick={handleAdd}
-        type="primary"
-        shape="round"
-        ghost
-        style={{
-          marginBottom: 16,
-        }}
+    <>
+      <StyledSpace>
+        <Button
+          onClick={handleAdd}
+          type="primary"
+          disabled={dataSource.length === 0}
+          shape="round"
+          ghost
+        >
+          Add a row
+        </Button>
+        <Button
+          onClick={() => {
+            setIsFetching(true);
+          }}
+          type="primary"
+          shape="round"
+          disabled={dataSource.length !== 0}
+        >
+          Fetch Data
+        </Button>
+      </StyledSpace>
+      <StyledCard
+        title={
+          dataSource.length === 0
+            ? "Click the fetch button to display data"
+            : "The given data is fetched from API"
+        }
       >
-        Add a row
-      </Button>
-      <Button
-        onClick={() => {
-          setIsFetching(true);
-        }}
-        type="primary"
-        shape="round"
-        style={{
-          marginBottom: 16,
-          marginLeft: 860,
-        }}
-      >
-        Fetch Data
-      </Button>
-      <StyledCard title="Click the fetch button to display data">
         {isFetching ? (
           <Table
             components={components}
-            rowClassName={"editable-row"}
-            bordered
+            bordered={false}
             dataSource={dataSource}
             columns={columns}
             loading={dataSource.length === 0 && <Spin />}
@@ -254,7 +256,7 @@ const EditTable = () => {
           ""
         )}
       </StyledCard>
-    </div>
+    </>
   );
 };
 

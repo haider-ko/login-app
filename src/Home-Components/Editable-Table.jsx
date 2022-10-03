@@ -1,27 +1,6 @@
-import {
-  Button,
-  Form,
-  Input,
-  Popconfirm,
-  Table,
-  Spin,
-  Modal,
-  Card,
-} from "antd";
-import {
-  HomeOutlined,
-  LoadingOutlined,
-  SettingFilled,
-  SmileOutlined,
-  SyncOutlined,
-  DeleteTwoTone,
-} from "@ant-design/icons";
+import { Button, Form, Input, Popconfirm, Table, Card, Spin } from "antd";
+import { DeleteTwoTone } from "@ant-design/icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Tag } from "antd";
-// import Card from "./Card";
-import CardList from "./CardList";
-import Cards from "./Cards";
 import styled from "styled-components";
 
 const StyledCard = styled(Card)`
@@ -112,33 +91,19 @@ const EditableCell = ({
 const EditTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const showModal = (id) => {
-    setIsModalOpen(true);
-    const newDat = dataSource.filter((item) => item.id !== id);
-    setDataSource(newDat);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   //Api Fetching
 
   useEffect(() => {
-    if (isFetching)
+    if (isFetching) {
       fetch("https://jsonplaceholder.typicode.com/users")
         .then((response) => response.json())
         .then((dataSource) => setDataSource(dataSource));
+    }
   }, [isFetching]);
 
   const [count, setCount] = useState(2);
+  console.log(dataSource);
 
   const handleDelete = (id) => {
     const newData = dataSource.filter((item) => item.id !== id);
@@ -263,8 +228,7 @@ const EditTable = () => {
         Add a row
       </Button>
       <Button
-        onClick={async () => {
-          <Spin spinning={loading} />;
+        onClick={() => {
           setIsFetching(true);
         }}
         type="primary"
@@ -284,6 +248,7 @@ const EditTable = () => {
             bordered
             dataSource={dataSource}
             columns={columns}
+            loading={dataSource.length === 0 && <Spin />}
           />
         ) : (
           ""

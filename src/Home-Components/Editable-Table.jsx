@@ -1,9 +1,34 @@
-import { Button, Form, Input, Popconfirm, Table, Spin, Modal } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Popconfirm,
+  Table,
+  Spin,
+  Modal,
+  Card,
+} from "antd";
+import {
+  HomeOutlined,
+  LoadingOutlined,
+  SettingFilled,
+  SmileOutlined,
+  SyncOutlined,
+  DeleteTwoTone,
+} from "@ant-design/icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tag } from "antd";
-const EditableContext = React.createContext(null);
+// import Card from "./Card";
+import CardList from "./CardList";
+import Cards from "./Cards";
+import styled from "styled-components";
 
+const StyledCard = styled(Card)`
+  border-radius: 10px;
+`;
+
+const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
   const [form] = Form.useForm();
   return (
@@ -87,6 +112,22 @@ const EditableCell = ({
 const EditTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const showModal = (id) => {
+    setIsModalOpen(true);
+    const newDat = dataSource.filter((item) => item.id !== id);
+    setDataSource(newDat);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   //Api Fetching
 
@@ -114,14 +155,17 @@ const EditTable = () => {
     {
       title: "email",
       dataIndex: "email",
+      editable: true,
     },
     {
       title: "username",
       dataIndex: "username",
+      editable: true,
     },
     {
-      title: "Phone Number",
+      title: "phone number",
       dataIndex: "phone",
+      editable: true,
     },
 
     {
@@ -133,18 +177,43 @@ const EditTable = () => {
             title="Sure to delete?"
             onConfirm={() => handleDelete(record.id)}
           >
-            <Link>Delete</Link>
+            <DeleteTwoTone />
           </Popconfirm>
         ) : null,
     },
+    // {
+    //   title: "operation",
+    //   dataIndex: "operation",
+    //   render: (_, record) =>
+    //     dataSource.length >= 1 ? (
+    //       <>
+    //         <Link type="primary" onClick={() => showModal(record.id)}>
+    //           Open Modal
+    //         </Link>
+    //         <Modal
+    //           title="Basic Modal"
+    //           open={isModalOpen}
+    //           onOk={handleOk}
+    //           onCancel={handleCancel}
+    //         >
+    //           <div>
+    //             {dataSource.map((employee, index) => {
+    //               return <div>{employee.name}</div>;
+    //             })}
+    //           </div>
+    //         </Modal>
+    //       </>
+    //     ) : null,
+    // },
   ];
 
   const handleAdd = () => {
     const newData = {
       id: count,
-      name: `Edward King ${count}`,
-      age: "32",
-      address: `London, Park Lane no. ${count}`,
+      name: `Type your name `,
+      email: "Type your email ",
+      phone: `Type your phone number`,
+      username: `Type your username`,
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
@@ -185,6 +254,8 @@ const EditTable = () => {
       <Button
         onClick={handleAdd}
         type="primary"
+        shape="round"
+        ghost
         style={{
           marginBottom: 16,
         }}
@@ -193,24 +264,31 @@ const EditTable = () => {
       </Button>
       <Button
         onClick={async () => {
-          <Spin />;
+          <Spin spinning={loading} />;
           setIsFetching(true);
         }}
         type="primary"
+        shape="round"
         style={{
           marginBottom: 16,
-          marginLeft: 800,
+          marginLeft: 860,
         }}
       >
         Fetch Data
       </Button>
-      <Table
-        components={components}
-        rowClassName={() => "editable-row"}
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-      />
+      <StyledCard title="Click the fetch button to display data">
+        {isFetching ? (
+          <Table
+            components={components}
+            rowClassName={"editable-row"}
+            bordered
+            dataSource={dataSource}
+            columns={columns}
+          />
+        ) : (
+          ""
+        )}
+      </StyledCard>
     </div>
   );
 };

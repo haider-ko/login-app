@@ -7,7 +7,9 @@ import {
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import CardList from "../Home-Components/CardList";
+import Card from "./Card";
 import EditTable from "./Editable-Table";
 import TableData from "./Table-Data";
 const { Header, Content, Footer, Sider } = Layout;
@@ -22,16 +24,20 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("Home", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Contact", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("About", "9", <FileOutlined />),
+  getItem(
+    <Link to="/home" style={{ textDecoration: "none" }}>
+      Home
+    </Link>,
+    "sub1",
+    <UserOutlined />
+  ),
+  getItem(
+    <Link to="/" style={{ textDecoration: "none" }}>
+      Logout
+    </Link>,
+    "sub2",
+    <TeamOutlined />
+  ),
 ];
 
 const Sidebar = (props) => {
@@ -76,7 +82,7 @@ const Sidebar = (props) => {
               }}
             >
               <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+              <Breadcrumb.Item>Komail</Breadcrumb.Item>
             </Breadcrumb>
             <div
               className="site-layout-background"

@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginPage/Login-Page";
 import Navbar from "./components/Navbar/navbar";
 import Signup from "./components/Sign-up";
-import CardList from "./Home-Components/CardList";
 import Directory from "./Home-Components/Directory";
 
 const App = () => {

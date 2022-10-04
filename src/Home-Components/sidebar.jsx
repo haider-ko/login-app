@@ -8,10 +8,7 @@ import {
 import { Breadcrumb, Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CardList from "../Home-Components/CardList";
-import Card from "./Card";
 import EditTable from "./Editable-Table";
-import TableData from "./Table-Data";
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {

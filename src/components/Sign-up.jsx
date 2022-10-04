@@ -55,12 +55,8 @@ const Signup = () => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [loginemail, setloginEmail] = useState("");
-  const [city, setCity] = useState("");
   const [password, setpassword] = useState("");
-  const [loginpassword, setloginpassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [initialState, SetinitialState] = useState([]);
+
   var navigate = useNavigate();
 
   const [form] = Form.useForm();
@@ -86,8 +82,6 @@ const Signup = () => {
     users.push(userData);
 
     localStorage.setItem("userData", JSON.stringify(userData));
-    // console.log(userData[1].password) test create new branch;
-
     navigate("/");
   }
 

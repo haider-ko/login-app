@@ -1,13 +1,11 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import { Col, Row } from "antd";
 import { Typography } from "antd";
 import { Avatar, Image } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
-import "./navbar.css";
 import Sidebar from "../Home-Components/sidebar";
 import { Link } from "react-router-dom";
-import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 
 const { Header, Content, Footer } = Layout;

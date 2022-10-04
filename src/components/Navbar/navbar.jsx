@@ -4,12 +4,9 @@ import { Typography } from "antd";
 import { Outlet } from "react-router";
 import { Avatar, Image } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
-import Signup from "../Sign-up";
-import LoginForm from "../LoginPage/Login-Page";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;

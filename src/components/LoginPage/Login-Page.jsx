@@ -12,24 +12,16 @@ import { Link } from "react-router-dom";
 const { Title } = Typography;
 
 const LoginForm = () => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [loginemail, setloginEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [password, setpassword] = useState("");
   const [loginpassword, setloginpassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [initialState, SetinitialState] = useState([]);
   const [form] = Form.useForm();
+
   var navigate = useNavigate();
+
   async function signinfunction() {
     await form.validateFields();
-    console.log("come");
     const allUsersData = JSON.parse(localStorage.getItem("userData")) || [];
-
     const filterUser = allUsersData.filter((x) => x.email === loginemail);
-    console.log(filterUser);
     // when email is found
     if (filterUser.length) {
       if (filterUser[0].password === loginpassword) {
